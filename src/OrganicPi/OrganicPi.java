@@ -22,7 +22,7 @@ public class OrganicPi {
 				return;
 			}
 			sequencer.open();
-			Sequence sequence = MidiSystem.getSequence( new File( args[0]) );
+			Sequence sequence = MidiSystem.getSequence( new File( "C:\\Users\\ollyspooner.SHELTERBOX\\Downloads\\Midi\\BottomG\\ring of fire.mid" ) );
 			Track track = sequence.createTrack();
 
 			// Insert an unplayable note at the start of the sequence
@@ -30,12 +30,12 @@ public class OrganicPi {
 			track.add( makeEvent( ShortMessage.NOTE_OFF, 0, 100, 64, 30 + 70 ) );
 			
 			// Find out how long the sequence is in seconds
-			long timeLength = sequence.getMicrosecondLength();
+			long timeLength = sequence.getMicrosecondLength(); // 5900000 ms = 5900
 			long tickLength = sequence.getTickLength();
 			long msPerTick = timeLength / tickLength;
-			long startTheEnd = ( timeLength - 50000 ) / msPerTick;
+			long startTheEnd = ( timeLength - 5000000 ) / msPerTick;
 
-			// Insert an unplayable note 5 secs before the end of the sequence
+			// Insert an unplayable note 5 seconds before the end of the sequence
 			track.add( makeEvent( ShortMessage.NOTE_ON, 0, 105, 64, (int)startTheEnd  ) );
 			track.add( makeEvent( ShortMessage.NOTE_OFF, 0, 105, 64, (int)startTheEnd + 70 ) );
 			
