@@ -12,8 +12,45 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
 public class OrganicPi {
 	public static void main( String[] args ) {
+		
+		// Listen for pin A or pin B
+		final GpioController gpio = GpioFactory.getInstance();
+		final GpioPinDigitalInput coinslotA = gpio.provisionDigitalInputPin( RaspiPin.GPIO_00, PinPullResistance.PULL_DOWN );
+		coinslotA.setShutdownOptions( true );
+		coinslotA.addListener( new GpioPinListenerDigital() {
+			@Override
+			public void handleGpioPinDigitalStateChangeEvent( GpioPinDigitalStateChangeEvent event ) {
+				if( event.getState() == PinState.HIGH ) {;
+					addperfomanceAtoplaylist();
+				}
+			}
+		} );
+		
+		
+		
+		playMidiFile( args[0] );
+	}
+	
+	public static void addperfomanceAtoplaylist() {
+		System.out.println( "A was pressed." );
+	}
+
+	public void addperfomanceBtoplaylist() {
+		System.out.println( "B was pressed." );
+	}
+	
+	public static void playMidiFile ( String fileToPlay ) {
 		// Load a MIDI file and play it with something...
 		try {
 			Sequencer sequencer = MidiSystem.getSequencer();
@@ -22,7 +59,7 @@ public class OrganicPi {
 				return;
 			}
 			sequencer.open();
-			Sequence sequence = MidiSystem.getSequence( new File( "C:\\Users\\ollyspooner.SHELTERBOX\\Downloads\\Midi\\BottomG\\ring of fire.mid" ) );
+			Sequence sequence = MidiSystem.getSequence( new File( fileToPlay ) );
 			Track track = sequence.createTrack();
 
 			// Insert an unplayable note at the start of the sequence

@@ -3,5 +3,18 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-8.0.202.08"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-core-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-core-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-device-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-device-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-example.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-example-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-example-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-gpio-extension-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Mendix/eclipse-workspace/OrganicPi/src/lib/pi4j-gpio-extension-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
