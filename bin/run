@@ -1,0 +1,2 @@
+#!/bin/bash
+java -classpath .:classes:/opt/pi4j/lib/* OrganicPi.OrganicPi File1.mid File2.mid
