@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /home/pi/organicpi/src
+java -classpath .:classes:/opt/pi4j/lib/* OrganicPi.OrganicPi List1 List2
+

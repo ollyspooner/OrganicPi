@@ -1,0 +1,3 @@
+#!/bin/bash
+javac -Xdiags:verbose -classpath .:classes:/opt/pi4j/lib/* OrganicPi/OrganicPi.java
+

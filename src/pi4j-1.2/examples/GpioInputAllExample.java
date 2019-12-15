@@ -28,7 +28,7 @@
  */
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.platform.PlatformAlreadyAssignedException;
+//import com.pi4j.platform.PlatformAlreadyAssignedException;
 import com.pi4j.util.CommandArgumentParser;
 import com.pi4j.util.Console;
 import com.pi4j.util.ConsoleColor;
@@ -55,7 +55,8 @@ public class GpioInputAllExample {
      * @throws InterruptedException
      * @throws PlatformAlreadyAssignedException
      */
-    public static void main(String[] args) throws InterruptedException, PlatformAlreadyAssignedException {
+    //public static void main(String[] args) throws InterruptedException, PlatformAlreadyAssignedException {
+    public static void main(String[] args) throws InterruptedException {
 
         // create Pi4J console wrapper/helper
         // (This is a utility class to abstract some of the boilerplate code)
