@@ -1,3 +1,7 @@
 #!/bin/bash
+<<<<<<< HEAD
 javac -Xdiags:verbose -classpath .:classes:/opt/pi4j/lib/* OrganicPi/OrganicPi.java
 
+=======
+javac -classpath .:classes:/opt/pi4j/lib/* OrganicPi/OrganicPi.java
+>>>>>>> d64205a213d07a4efe9e5b64092939c59fa10ee0
