@@ -34,6 +34,7 @@ public class OrganicPi {
 			// Listen for pin A or pin B
 
 			final GpioPinDigitalOutput readyLed = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_03, "Ready indicator", PinState.HIGH );
+			final GpioPinDigitalOutput organPower = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_07, "Organ power", PinState.HIGH );
 			final GpioPinDigitalInput coinslotA = gpio.provisionDigitalInputPin( RaspiPin.GPIO_01, PinPullResistance.PULL_UP );
 			final GpioPinDigitalInput coinslotB = gpio.provisionDigitalInputPin( RaspiPin.GPIO_04, PinPullResistance.PULL_UP );
 
@@ -59,7 +60,11 @@ public class OrganicPi {
 							playing = false;
 						}
 						if( !playing ) {
+							organPower.low();
 					        	console.println( "A was pressed. Now playing file " + dirList0[ dirListIndex0 ] );
+							try {
+								Thread.sleep(2000);
+							} catch ( InterruptedException e ) {}
 							processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList0[ dirListIndex0 ] );
 							try {
 								process = processBuilder.start();
@@ -69,6 +74,10 @@ public class OrganicPi {
 							} else {
 								dirListIndex0 = 0;
 							}
+							try {
+								process.waitFor();
+							} catch ( InterruptedException e ) {}
+							organPower.high();
 						} else {
 							console.println( "There is already a track playing! " +
 								"Wait for it to finish before inserting coins." );
@@ -90,7 +99,11 @@ public class OrganicPi {
 							playing = false;
 						}
 						if( !playing ) {
+							organPower.low();
 					        	console.println( "B was pressed. Now playing file " + dirList1[ dirListIndex1 ] );
+							try {
+								Thread.sleep(2000);
+							} catch ( InterruptedException e ) {}
 							processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList1[ dirListIndex1 ] );
 							try {
 								process = processBuilder.start();
@@ -99,6 +112,17 @@ public class OrganicPi {
 								dirListIndex1++;
 							} else {
 								dirListIndex1 = 0;
+							}
+							playing = true;
+							while( playing ) {
+				       				try {
+									process.exitValue();
+									playing = false;
+								} catch ( IllegalThreadStateException itse ) {
+									playing = true;
+								} catch ( NullPointerException npe ) {
+									playing = false;
+								}
 							}
 						} else {
 							console.println( "There is already a track playing! " +
@@ -112,6 +136,7 @@ public class OrganicPi {
 		//}
 		console.waitForExit();
 		readyLed.low();
+		organPower.high();
 		gpio.shutdown();
 	}
 }
