@@ -15,6 +15,7 @@ public class OrganicPi {
 	private static int endOffsetSeconds = 10;
 	private static int dirListIndex0 = 0;
 	private static int dirListIndex1 = 0;
+	private static int creditRemaining = 0;
 	private static Process process = null;
 	
 	public static void main( String[] args ) throws InterruptedException {
@@ -61,24 +62,27 @@ public class OrganicPi {
 						}
 						if( !playing ) {
 							organPower.low();
-					        	console.println( "A was pressed. Now playing file " + dirList0[ dirListIndex0 ] );
-							try {
-								Thread.sleep(2000);
-							} catch ( InterruptedException e ) {}
-							processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList0[ dirListIndex0 ] );
-							try {
-								process = processBuilder.start();
-							} catch ( IOException e ) {}
-							if( dirListIndex0 < dirList0.length - 1 ) {
-								dirListIndex0++;
-							} else {
-								dirListIndex0 = 0;
-							}
-							try {
-								process.waitFor();
-							} catch ( InterruptedException e ) {}
+							do {
+						        	console.println( "A was pressed. Now playing file " + dirList0[ dirListIndex0 ] );
+								try {
+									Thread.sleep(2000);
+								} catch ( InterruptedException e ) {}
+								processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList0[ dirListIndex0 ] );
+								try {
+									process = processBuilder.start();
+								} catch ( IOException e ) {}
+								if( dirListIndex0 < dirList0.length - 1 ) {
+									dirListIndex0++;
+								} else {
+									dirListIndex0 = 0;
+								}
+								try {
+									process.waitFor();
+								} catch ( InterruptedException e ) {}
+							} while ( creditRemaining-- > 0 );
 							organPower.high();
 						} else {
+							creditRemaining++;
 							console.println( "There is already a track playing! " +
 								"Wait for it to finish before inserting coins." );
 						}
