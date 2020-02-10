@@ -65,9 +65,9 @@ public class OrganicPi {
 							do {
 						        	console.println( "A was pressed. Now playing file " + dirList0[ dirListIndex0 ] );
 								try {
-									Thread.sleep(2000);
+									Thread.sleep( 2000 );
 								} catch ( InterruptedException e ) {}
-								processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList0[ dirListIndex0 ] );
+								processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 '" + dirList0[ dirListIndex0 ] + "'");
 								try {
 									process = processBuilder.start();
 								} catch ( IOException e ) {}
@@ -108,7 +108,7 @@ public class OrganicPi {
 							try {
 								Thread.sleep(2000);
 							} catch ( InterruptedException e ) {}
-							processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 " + dirList1[ dirListIndex1 ] );
+							processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 '" + dirList1[ dirListIndex1 ] + "'");
 							try {
 								process = processBuilder.start();
 							} catch ( IOException e ) {}
