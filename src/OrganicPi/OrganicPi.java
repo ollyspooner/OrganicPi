@@ -35,9 +35,11 @@ public class OrganicPi {
 			// Listen for pin A or pin B
 
 			final GpioPinDigitalOutput readyLed = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_03, "Ready indicator", PinState.HIGH );
-			final GpioPinDigitalOutput organPower = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_07, "Organ power", PinState.HIGH );
+			final GpioPinDigitalOutput busyLed = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_04, "Busy indicator", PinState.LOW );
+			final GpioPinDigitalOutput organPower = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_21, "Organ power", PinState.HIGH );
+			final GpioPinDigitalOutput lighting = gpio.provisionDigitalOutputPin( RaspiPin.GPIO_22, "Lighting", PinState.HIGH );
 			final GpioPinDigitalInput coinslotA = gpio.provisionDigitalInputPin( RaspiPin.GPIO_01, PinPullResistance.PULL_UP );
-			final GpioPinDigitalInput coinslotB = gpio.provisionDigitalInputPin( RaspiPin.GPIO_04, PinPullResistance.PULL_UP );
+			final GpioPinDigitalInput coinslotB = gpio.provisionDigitalInputPin( RaspiPin.GPIO_02, PinPullResistance.PULL_UP );
 
 			coinslotA.setDebounce( 1000 );
 			coinslotB.setDebounce( 1000 );
@@ -64,9 +66,11 @@ public class OrganicPi {
 							organPower.low();
 							do {
 						        	console.println( "A was pressed. Now playing file " + dirList0[ dirListIndex0 ] );
+								busyLed.high();
 								try {
 									Thread.sleep( 2000 );
 								} catch ( InterruptedException e ) {}
+								lighting.low();
 								processBuilder.command( "bash", "-c", "aplaymidi --port 20:0 '" + dirList0[ dirListIndex0 ] + "'");
 								try {
 									process = processBuilder.start();
@@ -79,6 +83,8 @@ public class OrganicPi {
 								try {
 									process.waitFor();
 								} catch ( InterruptedException e ) {}
+								lighting.high();
+								busyLed.low();
 							} while ( creditRemaining-- > 0 );
 							organPower.high();
 						} else {
@@ -140,7 +146,9 @@ public class OrganicPi {
 		//}
 		console.waitForExit();
 		readyLed.low();
+		busyLed.low();
 		organPower.high();
+		lighting.high();
 		gpio.shutdown();
 	}
 }
